@@ -61,7 +61,7 @@ export function Hero() {
           id="buy-cta"
           className="flex flex-col items-center opacity-0 translate-y-20"
         >
-          <Button href="/highlights">Buy</Button>
+          <Button href="/#highlights">Buy</Button>
           <p className="font-normal text-xl">From $199/month or $999</p>
         </div>
       </div>
