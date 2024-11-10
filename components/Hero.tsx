@@ -2,9 +2,9 @@
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { heroVideo, smallHeroVideo } from "../utils";
+import { heroVideo, smallHeroVideo } from "@/utils";
 import { useEffect, useState } from "react";
-import { Button } from "@/app/Button";
+import { Button } from "@/components/Button";
 
 export function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
