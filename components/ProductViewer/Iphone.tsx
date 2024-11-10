@@ -1,14 +1,14 @@
 import { OrbitControls, PerspectiveCamera, View } from "@react-three/drei";
 
-import React from "react";
+import React, { useState } from "react";
 import * as THREE from "three";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { Iphone3dModel } from "./Iphone3dModel";
 import { Suspense } from "react";
 import { models } from "@/constants";
 import { ProductSize } from "./ProductViewer";
 import { Lights } from "./Lights";
 import { Loader } from "./Loader";
+import { Iphone3DModel } from "./Iphone3dModel";
 
 import { extend } from "@react-three/fiber";
 
@@ -32,6 +32,8 @@ export function Iphone({
   setRotationState,
   item,
 }: Props) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <View
       index={index}
@@ -61,12 +63,15 @@ export function Iphone({
         name={`${index === 1} ? 'small' : 'large`}
         position={[0, 0, 0]}
       >
-        <Suspense fallback={<Loader />}>
-          <Iphone3dModel
+        <Suspense fallback={!isLoaded && <Loader />}>
+          <Iphone3DModel
             groupProps={{
               scale: index === 1 ? [15, 15, 15] : [17, 17, 17],
             }}
             item={item}
+            onLoad={() => {
+              setIsLoaded(true);
+            }}
           />
         </Suspense>
       </group>

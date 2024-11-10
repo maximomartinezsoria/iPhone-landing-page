@@ -18,9 +18,10 @@ extend({ OrbitControls });
 type Props = {
   groupProps?: GroupProps;
   item: (typeof models)[number];
+  onLoad?: () => void;
 };
 
-export function Iphone3dModel({ groupProps, item }: Props) {
+export function Iphone3dModelImpl({ groupProps, item, onLoad }: Props) {
   const { nodes, materials } = useGLTF("/models/scene.glb");
 
   const texture = useTexture(item.img);
@@ -41,6 +42,12 @@ export function Iphone3dModel({ groupProps, item }: Props) {
       material[1].needsUpdate = true;
     });
   }, [materials, item]);
+
+  useEffect(() => {
+    if (onLoad) {
+      onLoad();
+    }
+  }, [onLoad]);
 
   return (
     <group {...groupProps} dispose={null}>
