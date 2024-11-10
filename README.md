@@ -1,5 +1,5 @@
 # iPhone Selling Landing Page
-Pretty much since I started my career a software engineer, I wondered how are Apple landing pages made. So, I decided it'd be a fun weekend project.
+Pretty much since I started my career as a software engineer, I've wondered how Apple's landing pages are made. So, I decided it would be a fun weekend project.
 
 ## Local development
 1. Install packages with yarn: `yarn`
