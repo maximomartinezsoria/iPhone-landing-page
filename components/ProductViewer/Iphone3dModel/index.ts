@@ -1,5 +1,5 @@
 import React from "react";
-import { lazyWithDelay } from "@/hooks/lazyWithDelay";
+import { lazyWithDelay } from "@/utils/lazyWithDelay";
 
 export const Iphone3DModel = React.lazy(() =>
   lazyWithDelay(
