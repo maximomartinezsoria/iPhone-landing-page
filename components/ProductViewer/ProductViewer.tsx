@@ -10,6 +10,7 @@ import { View } from "@react-three/drei";
 import { models } from "@/constants";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import clsx from "clsx";
+import { useMounted } from "@/hooks/useMounted";
 
 export enum ProductSize {
   SMALL,
@@ -22,6 +23,7 @@ export const sizes = [
 ];
 
 export function ProductViewer() {
+  const isMounted = useMounted();
   const [size, setSize] = useState<ProductSize>(ProductSize.SMALL);
   const [model, setModel] = useState(models[0]);
   const [smallRotation, setSmallRotation] = useState(0);
@@ -41,6 +43,7 @@ export function ProductViewer() {
   );
 
   useGSAP(() => {
+    if (!isMounted) return;
     gsap.to("#product-viewer-title", {
       y: 0,
       opacity: 1,
@@ -49,7 +52,15 @@ export function ProductViewer() {
         start: "top 80%",
       },
     });
-  }, []);
+
+    gsap.to("#product-viewer-iphone", {
+      display: "block",
+      scrollTrigger: {
+        trigger: "#product-viewer-title",
+        start: "top 80%",
+      },
+    });
+  }, [isMounted]);
 
   useEffect(() => {
     sizeTimeline.current.to("#size-buble", {
@@ -137,32 +148,34 @@ export function ProductViewer() {
             ref={canvasContainerRef}
             className="w-full h-[75vh] md:h-[90vh] overflow-hidden relative"
           >
-            <Iphone
-              index={1}
-              groupRef={small}
-              gsapType="view1"
-              controlRef={cameraControlSmall}
-              setRotationState={setSmallRotation}
-              item={model}
-              size={size}
-            />
-            <Iphone
-              index={2}
-              groupRef={large}
-              gsapType="view2"
-              controlRef={cameraControlLarge}
-              setRotationState={setLargeRotation}
-              item={model}
-              size={size}
-            />
+            <div id="product-viewer-iphone" className="hidden">
+              <Iphone
+                index={1}
+                groupRef={small}
+                gsapType="view1"
+                controlRef={cameraControlSmall}
+                setRotationState={setSmallRotation}
+                item={model}
+                size={size}
+              />
+              <Iphone
+                index={2}
+                groupRef={large}
+                gsapType="view2"
+                controlRef={cameraControlLarge}
+                setRotationState={setLargeRotation}
+                item={model}
+                size={size}
+              />
 
-            <Canvas
-              className="w-full h-full inset-0 overflow-hidden"
-              eventSource={canvasContainerRef.current as HTMLDivElement}
-              style={{ position: "fixed", pointerEvents: "none" }}
-            >
-              <View.Port />
-            </Canvas>
+              <Canvas
+                className="w-full h-full inset-0 overflow-hidden"
+                eventSource={canvasContainerRef.current as HTMLDivElement}
+                style={{ position: "fixed", pointerEvents: "none" }}
+              >
+                <View.Port />
+              </Canvas>
+            </div>
           </div>
 
           <div className="mx-auto w-full">
