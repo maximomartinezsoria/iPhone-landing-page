@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
 import { VideoCarousel } from "./VideoCarousel";
-import { useEffect, useState } from "react";
+import { useMounted } from "@/hooks/useMounted";
 
 const links = [
   {
@@ -23,7 +23,7 @@ const links = [
 ];
 
 export function Highlights() {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
 
   useGSAP(() => {
     if (!isMounted) return;
@@ -46,10 +46,6 @@ export function Highlights() {
       },
     });
   }, [isMounted]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   if (!isMounted) return null;
 
